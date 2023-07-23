@@ -110,15 +110,14 @@ def main():
         
         message_content += "</body></html>"
 
-        print(message_content)
  
         service = build('gmail', 'v1', credentials=creds)
 
         
         message = MIMEMultipart('alternative')
         text = "Hi!\n"
-        #message['to'] = [os.getenv("RECIPIENT1"), os.getenv("RECIPIENT2")]
-        message['to'] = os.getenv("RECIPIENT1")
+        message['to'] = [os.getenv("RECIPIENT1"), os.getenv("RECIPIENT2")]
+        #message['to'] = os.getenv("RECIPIENT1")
         message['subject'] = f'Reminder Spectacles - {str(today)}'
         part1 = MIMEText(text, 'plain')
         part2 = MIMEText(message_content, 'html')
@@ -128,7 +127,6 @@ def main():
             'raw': base64.urlsafe_b64encode(message.as_bytes()).decode()
         }
         message = (service.users().messages().send(userId="me", body=create_message).execute())
-        print(F'sent message to {message} Message Id: {message["id"]}')
 
     except HTTPError as error:
         print(F'An error occurred: {error}')
