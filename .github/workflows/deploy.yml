@@ -30,8 +30,4 @@ jobs:
         run: |
           python app.py
         env:
-          - SPECTACLE_SHEET: ${{ secrets.SPECTACLE_SHEET }}
-          - SHEET_TOKEN: ${{ secrets.SHEET_TOKEN }}
-          - SENDER: ${{ secrets.SENDER }}
-          - RECIPIENT1: ${{ secrets.RECIPIENT1 }}
-          - RECIPIENT2: ${{ secrets.RECIPIENT2 }}
+          SPECTACLE_SHEET: ${{ secrets.SPECTACLE_SHEET }}
