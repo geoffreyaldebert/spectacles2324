@@ -94,7 +94,7 @@ def main():
                     urgences += f"<p>Ouverture des réservations : {val[6].split('-')[2]}/{val[6].split('-')[1]}/{val[6].split('-')[0]}</p>"
                 urgences += f'<a href="{val[8]}">Plus d\'infos</a></div>'
 
-            if val[7] == '' and val[4] < alert_date:
+            if val[7] == '' and val[4] <= alert_date:
                 next += f"<div style='color: white; background-color: #de856a; padding: 15px; margin-bottom: 20px; border: 1px solid #ebebeb'><h2>{val[1]}</h2> (théâtre {val[0]})"
                 next += f"<p>Metteur en scène : {val[3]} ; Auteur : {val[2]}</p>"
                 if len(val[4].split('-')) > 2 and len(val[5].split('-')) > 2:
@@ -109,24 +109,23 @@ def main():
             message_content += next
         
         message_content += "</body></html>"
-
- 
-        service = build('gmail', 'v1', credentials=creds)
-
         
-        message = MIMEMultipart('alternative')
-        text = "Hi!\n"
-        message['to'] = f'{os.getenv("RECIPIENT1")}, {os.getenv("RECIPIENT2")}'
-        #message['to'] = os.getenv("RECIPIENT1")
-        message['subject'] = f'Reminder Spectacles - {str(today)}'
-        part1 = MIMEText(text, 'plain')
-        part2 = MIMEText(message_content, 'html')
-        message.attach(part1)
-        message.attach(part2)
-        create_message = {
-            'raw': base64.urlsafe_b64encode(message.as_bytes()).decode()
-        }
-        message = (service.users().messages().send(userId="me", body=create_message).execute())
+        if urgences != "" or next != "":
+            service = build('gmail', 'v1', credentials=creds)
+            
+            message = MIMEMultipart('alternative')
+            text = "Hi!\n"
+            message['to'] = f'{os.getenv("RECIPIENT1")}, {os.getenv("RECIPIENT2")}'
+            #message['to'] = os.getenv("RECIPIENT1")
+            message['subject'] = f'Reminder Spectacles - {str(today)}'
+            part1 = MIMEText(text, 'plain')
+            part2 = MIMEText(message_content, 'html')
+            message.attach(part1)
+            message.attach(part2)
+            create_message = {
+                'raw': base64.urlsafe_b64encode(message.as_bytes()).decode()
+            }
+            message = (service.users().messages().send(userId="me", body=create_message).execute())
 
     except HTTPError as error:
         print(F'An error occurred: {error}')
