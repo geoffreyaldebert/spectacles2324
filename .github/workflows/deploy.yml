@@ -1,0 +1,37 @@
+
+
+name: Send mail for spectacles
+on:  
+  schedule:
+    - cron: "10 * * * *"
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    name: Execute script
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@master
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Run script
+        run: |
+          python app.py
+        env:
+          - SPECTACLE_SHEET: ${{ secrets.SPECTACLE_SHEET }}
+          - SHEET_TOKEN: ${{ secrets.SHEET_TOKEN }}
+          - SENDER: ${{ secrets.SENDER }}
+          - RECIPIENT1: ${{ secrets.RECIPIENT1 }}
+          - RECIPIENT2: ${{ secrets.RECIPIENT2 }}
