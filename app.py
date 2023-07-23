@@ -85,17 +85,18 @@ def main():
         urgences = ""
         next = ""
         for val in values:
-            if val[7] == '' and val[4] < alert_date:
-                next += f"<div style='color: white; background-color: #de856a; padding: 15px; margin-bottom: 20px; border: 1px solid #ebebeb'><h2>{val[1]}</h2> (théâtre {val[0]})"
-                next += f"<p>Metteur en scène : {val[3]} ; Auteur : {val[2]}</p>"
-                next += f"<p>Du : {val[4]} Au : {val[5]}</p>"
-                next += f"<p>Ouverture des réservations : {val[4]}</p>"
-                next += f'<a href="{val[8]}">Plus d\'infos</a></div>'
             if val[7] == '' and val[6] != '' and val[6] <= alert_date2:
                 urgences += f"<div style='color: white; background-color: #5f75d4; padding: 15px; margin-bottom: 20px; border: 1px solid #ebebeb'><h2>{val[1]}</h2> (théâtre {val[0]})"
                 urgences += f"<p>Metteur en scène : {val[3]} ; Auteur : {val[2]}</p>"
                 urgences += f"<p>Du : {val[4]} Au : {val[5]}</p>"
+                urgences += f"<p>Ouverture des réservations : {val[6]}</p>"
                 urgences += f'<a href="{val[8]}">Plus d\'infos</a></div>'
+
+            if val[7] == '' and val[4] < alert_date:
+                next += f"<div style='color: white; background-color: #de856a; padding: 15px; margin-bottom: 20px; border: 1px solid #ebebeb'><h2>{val[1]}</h2> (théâtre {val[0]})"
+                next += f"<p>Metteur en scène : {val[3]} ; Auteur : {val[2]}</p>"
+                next += f"<p>Du : {val[4]} Au : {val[5]}</p>"
+                next += f'<a href="{val[8]}">Plus d\'infos</a></div>'
 
         if urgences != "":
             message_content += "<p><b>Urgence Résa</b>, ouverture des réservations dans les 7 prochains jours :</p>"

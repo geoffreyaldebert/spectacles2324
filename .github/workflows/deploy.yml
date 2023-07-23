@@ -3,7 +3,7 @@
 name: Send mail for spectacles
 on:  
   schedule:
-    - cron: "10 * * * *"
+    - cron: "0 10 * * 2"
   push:
     branches:
       - master
