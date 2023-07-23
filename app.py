@@ -88,21 +88,24 @@ def main():
             if val[7] == '' and val[6] != '' and val[6] <= alert_date2:
                 urgences += f"<div style='color: white; background-color: #5f75d4; padding: 15px; margin-bottom: 20px; border: 1px solid #ebebeb'><h2>{val[1]}</h2> (théâtre {val[0]})"
                 urgences += f"<p>Metteur en scène : {val[3]} ; Auteur : {val[2]}</p>"
-                urgences += f"<p>Du : {val[4]} Au : {val[5]}</p>"
-                urgences += f"<p>Ouverture des réservations : {val[6]}</p>"
+                if len(val[4].split('-')) > 2 and len(val[5].split('-')) > 2:
+                    urgences += f"<p>Du : {val[4].split('-')[2]}/{val[4].split('-')[1]}/{val[4].split('-')[0]} Au : {val[5].split('-')[2]}/{val[5].split('-')[1]}/{val[5].split('-')[0]}</p>"
+                if  len(val[6].split('-')) > 2:
+                    urgences += f"<p>Ouverture des réservations : {val[6].split('-')[2]}/{val[6].split('-')[1]}/{val[6].split('-')[0]}</p>"
                 urgences += f'<a href="{val[8]}">Plus d\'infos</a></div>'
 
             if val[7] == '' and val[4] < alert_date:
                 next += f"<div style='color: white; background-color: #de856a; padding: 15px; margin-bottom: 20px; border: 1px solid #ebebeb'><h2>{val[1]}</h2> (théâtre {val[0]})"
                 next += f"<p>Metteur en scène : {val[3]} ; Auteur : {val[2]}</p>"
-                next += f"<p>Du : {val[4]} Au : {val[5]}</p>"
+                if len(val[4].split('-')) > 2 and len(val[5].split('-')) > 2:
+                    next += f"<p>Du : {val[4].split('-')[2]}/{val[4].split('-')[1]}/{val[4].split('-')[0]} Au : {val[5].split('-')[2]}/{val[5].split('-')[1]}/{val[5].split('-')[0]}</p>"
                 next += f'<a href="{val[8]}">Plus d\'infos</a></div>'
 
         if urgences != "":
-            message_content += "<p><b>Urgence Résa</b>, ouverture des réservations dans les 7 prochains jours :</p>"
+            message_content += "<h3><b>Urgence Résa</b>, ouverture des réservations dans les 7 prochains jours :</h3>"
             message_content += urgences
         if next != "":
-            message_content += "<p>Spectacle qui commencent dans les deux prochains mois, et dont les places ne sont pas encore réservés<p>"
+            message_content += "<h3>Spectacle qui commencent <b>dans les deux prochains mois</b>, et dont les places ne sont pas encore réservés<h3>"
             message_content += next
         
         message_content += "</body></html>"
