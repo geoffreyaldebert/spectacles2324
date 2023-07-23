@@ -85,7 +85,7 @@ def main():
         urgences = ""
         next = ""
         for val in values:
-            if val[7] == '' and val[6] != '' and val[6] <= alert_date2:
+            if val[7] == '' and val[6] != '' and val[6] <= alert_date2 and val[5] >= str(today):
                 urgences += f"<div style='color: white; background-color: #5f75d4; padding: 15px; margin-bottom: 20px; border: 1px solid #ebebeb'><h2>{val[1]}</h2> (théâtre {val[0]})"
                 urgences += f"<p>Metteur en scène : {val[3]} ; Auteur : {val[2]}</p>"
                 if len(val[4].split('-')) > 2 and len(val[5].split('-')) > 2:
@@ -94,7 +94,7 @@ def main():
                     urgences += f"<p>Ouverture des réservations : {val[6].split('-')[2]}/{val[6].split('-')[1]}/{val[6].split('-')[0]}</p>"
                 urgences += f'<a href="{val[8]}">Plus d\'infos</a></div>'
 
-            if val[7] == '' and val[4] <= alert_date:
+            if val[7] == '' and val[4] <= alert_date and val[5] >= str(today):
                 next += f"<div style='color: white; background-color: #de856a; padding: 15px; margin-bottom: 20px; border: 1px solid #ebebeb'><h2>{val[1]}</h2> (théâtre {val[0]})"
                 next += f"<p>Metteur en scène : {val[3]} ; Auteur : {val[2]}</p>"
                 if len(val[4].split('-')) > 2 and len(val[5].split('-')) > 2:
