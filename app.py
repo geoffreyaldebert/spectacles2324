@@ -24,8 +24,8 @@ from datetime import date
 import dateutil.relativedelta
 
 today = date.today()
-alert_date = str(today + dateutil.relativedelta.relativedelta(days=70))
-alert_date2 = str(today + dateutil.relativedelta.relativedelta(days=3))
+alert_date = str(today + dateutil.relativedelta.relativedelta(days=62))
+alert_date2 = str(today + dateutil.relativedelta.relativedelta(days=8))
 
 secret_auth = os.getenv("SHEET_AUTH")
 with open('secrets.json', 'w') as token:
@@ -82,7 +82,6 @@ def main():
             return
         message_content = "<html><head></head><body>"
         message_content += "<h2>Agenda Spectacle</h2>"
-        message_content += "<p><b>Urgence Résa</b>, ouverture des réservations dans les 4 prochains jours :</p>"
         urgences = ""
         next = ""
         for val in values:
@@ -90,6 +89,7 @@ def main():
                 next += f"<div style='color: white; background-color: #de856a; padding: 15px; margin-bottom: 20px; border: 1px solid #ebebeb'><h2>{val[1]}</h2> (théâtre {val[0]})"
                 next += f"<p>Metteur en scène : {val[3]} ; Auteur : {val[2]}</p>"
                 next += f"<p>Du : {val[4]} Au : {val[5]}</p>"
+                next += f"<p>Ouverture des réservations : {val[4]}</p>"
                 next += f'<a href="{val[8]}">Plus d\'infos</a></div>'
             if val[7] == '' and val[6] != '' and val[6] <= alert_date2:
                 urgences += f"<div style='color: white; background-color: #5f75d4; padding: 15px; margin-bottom: 20px; border: 1px solid #ebebeb'><h2>{val[1]}</h2> (théâtre {val[0]})"
@@ -97,9 +97,13 @@ def main():
                 urgences += f"<p>Du : {val[4]} Au : {val[5]}</p>"
                 urgences += f'<a href="{val[8]}">Plus d\'infos</a></div>'
 
-        message_content += urgences
-        message_content += "<p>Spectacle qui commencent dans les trois prochains mois, et dont les places ne sont pas encore réservés<p>"
-        message_content += next
+        if urgences != "":
+            message_content += "<p><b>Urgence Résa</b>, ouverture des réservations dans les 7 prochains jours :</p>"
+            message_content += urgences
+        if next != "":
+            message_content += "<p>Spectacle qui commencent dans les deux prochains mois, et dont les places ne sont pas encore réservés<p>"
+            message_content += next
+        
         message_content += "</body></html>"
 
         print(message_content)
@@ -111,7 +115,7 @@ def main():
         text = "Hi!\n"
         #message['to'] = [os.getenv("RECIPIENT1"), os.getenv("RECIPIENT2")]
         message['to'] = os.getenv("RECIPIENT1")
-        message['subject'] = f'Reminder Spectacles - f{str(today)}'
+        message['subject'] = f'Reminder Spectacles - {str(today)}'
         part1 = MIMEText(text, 'plain')
         part2 = MIMEText(message_content, 'html')
         message.attach(part1)
