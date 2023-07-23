@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
+        python-version: ["3.10"]
     steps:
       - name: Checkout repo
         uses: actions/checkout@master
@@ -31,3 +31,7 @@ jobs:
           python app.py
         env:
           SPECTACLE_SHEET: ${{ secrets.SPECTACLE_SHEET }}
+          SHEET_TOKEN: ${{ secrets.SHEET_TOKEN }}
+          SENDER: ${{ secrets.SENDER }}
+          RECIPIENT1: ${{ secrets.RECIPIENT1 }}
+          RECIPIENT2: ${{ secrets.RECIPIENT2 }}
