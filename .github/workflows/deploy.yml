@@ -31,6 +31,7 @@ jobs:
           python app.py
         env:
           SPECTACLE_SHEET: ${{ secrets.SPECTACLE_SHEET }}
+          SHEET_AUTH: ${{ secrets.SHEET_TOKEN }}
           SHEET_TOKEN: ${{ secrets.SHEET_TOKEN }}
           SENDER: ${{ secrets.SENDER }}
           RECIPIENT1: ${{ secrets.RECIPIENT1 }}

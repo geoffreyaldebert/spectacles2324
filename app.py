@@ -111,7 +111,7 @@ def main():
         text = "Hi!\n"
         #message['to'] = [os.getenv("RECIPIENT1"), os.getenv("RECIPIENT2")]
         message['to'] = os.getenv("RECIPIENT1")
-        message['subject'] = 'Email Subject'
+        message['subject'] = f'Reminder Spectacles - f{str(today)}'
         part1 = MIMEText(text, 'plain')
         part2 = MIMEText(message_content, 'html')
         message.attach(part1)
