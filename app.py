@@ -105,7 +105,7 @@ def main():
             message_content += "<h3><b>Urgence Résa</b>, ouverture des réservations dans les 7 prochains jours :</h3>"
             message_content += urgences
         if next != "":
-            message_content += "<h3>Spectacle qui commencent <b>dans les deux prochains mois</b>, et dont les places ne sont pas encore réservés<h3>"
+            message_content += "<h3>Spectacle qui commencent <b>dans les deux prochains mois</b>, et dont les places ne sont pas encore réservées<h3>"
             message_content += next
         
         message_content += "</body></html>"
