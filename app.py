@@ -116,7 +116,7 @@ def main():
         
         message = MIMEMultipart('alternative')
         text = "Hi!\n"
-        message['to'] = [os.getenv("RECIPIENT1"), os.getenv("RECIPIENT2")]
+        message['to'] = f'{os.getenv("RECIPIENT1")}, {os.getenv("RECIPIENT2")}'
         #message['to'] = os.getenv("RECIPIENT1")
         message['subject'] = f'Reminder Spectacles - {str(today)}'
         part1 = MIMEText(text, 'plain')
